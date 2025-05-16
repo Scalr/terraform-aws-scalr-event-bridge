@@ -1,19 +1,21 @@
-variable "region" {
-  description = "AWS region to deploy resources"
+variable "scalr_hostname" {
+  description = "Scalr hostname for API access"
   type        = string
-  default     = "us-east-1"
 }
 
-variable "bridge_name" {
-  description = "Name of the EventBridge integration"
+
+variable "scalr_token" {
+  description = "Scalr API token"
   type        = string
-  default     = "scalr-integration-demo"
+  sensitive   = true
+}
+
+variable "event_bridge_rule_arn" {
 }
 
 variable "s3_bucket_name" {
   description = "Name of the S3 bucket for state storage"
   type        = string
-  default     = null
 }
 
 variable "lambda_timeout" {
@@ -34,8 +36,7 @@ variable "log_retention" {
   default     = 30
 }
 
-variable "state_retention_days" {
-  description = "Number of days to retain state files in S3"
-  type        = number
-  default     = 90
+variable "kms_key_arn" {
+  description = "ARN of the KMS key used for encryption"
+  type        = string
 }

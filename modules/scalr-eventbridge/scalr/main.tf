@@ -1,5 +1,8 @@
-data "scalr_role" "user" {
-  name = "user"
+# Scalr service account and integration
+data "scalr_current_account" "account" {}
+
+data "scalr_role" "read_only" {
+  name = "read-only"
 }
 
 resource "scalr_service_account" "event_bridge" {
@@ -8,14 +11,20 @@ resource "scalr_service_account" "event_bridge" {
   status      = "Active"
 }
 
-resource "scalr_service_account_token" "default" {
-  service_account_id = scalr_service_account.event_bridge.id
-  description        = "Created by Tofu"
+resource "scalr_event_bridge_integration" "example" {
+  name           = var.bridge_name
+  aws_account_id = var.aws_account_id
+  region         = var.aws_region
 }
 
-data "scalr_current_account" "account" {}
+resource "scalr_service_account_token" "default" {
+  service_account_id = scalr_service_account.event_bridge.id
+  description        = "Created by Terraform"
+}
 
-resource "scalr_access_policy" "team_read_all_on_acc_scope" {
+
+# Access policy for service account
+resource "scalr_access_policy" "service_account_access" {
   subject {
     type = "service_account"
     id   = scalr_service_account.event_bridge.id
@@ -27,6 +36,6 @@ resource "scalr_access_policy" "team_read_all_on_acc_scope" {
   }
 
   role_ids = [
-    data.scalr_role.user.id
+    data.scalr_role.read_only.id
   ]
 }

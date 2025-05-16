@@ -1,13 +1,6 @@
-variable "region" {
-  description = "AWS region to deploy resources"
-  type        = string
-  default     = "us-east-1"
-}
-
 variable "bridge_name" {
   description = "Name of the EventBridge integration"
   type        = string
-  default     = "scalr-integration-demo"
 }
 
 variable "s3_bucket_name" {
@@ -38,4 +31,4 @@ variable "state_retention_days" {
   description = "Number of days to retain state files in S3"
   type        = number
   default     = 90
-}
+} 
