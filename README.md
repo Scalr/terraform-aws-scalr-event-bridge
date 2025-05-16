@@ -34,7 +34,7 @@ This Terraform module creates an integration between AWS EventBridge and Scalr, 
 
 ```hcl
 module "scalr_eventbridge" {
-  source = "github.com/Scalr/terraform-aws-scalr-eventbridge"
+  source = "github.com/Scalr/terraform-aws-scalr-event-bridge"
 
   # Required parameters
   region      = "us-east-1"
