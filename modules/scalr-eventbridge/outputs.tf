@@ -16,7 +16,6 @@ output "kms_key_arn" {
 output "service_account_email" {
   description = "Email of the Scalr service account"
   value       = module.scalr.service_account_email
-  sensitive   = true
 }
 
 output "event_bridge_source_name" {
