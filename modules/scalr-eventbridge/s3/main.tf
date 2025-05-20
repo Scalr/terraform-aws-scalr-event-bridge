@@ -20,6 +20,7 @@ resource "aws_kms_alias" "lambda_key_alias" {
 # S3 bucket with encryption
 resource "aws_s3_bucket" "states" {
   bucket = var.s3_bucket_name != null ? var.s3_bucket_name : "scalr-states-backup-${random_string.bucket_suffix.result}"
+  force_destroy = var.force_destroy
 }
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "states_encryption" {

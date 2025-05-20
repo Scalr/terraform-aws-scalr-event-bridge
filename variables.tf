@@ -16,6 +16,12 @@ variable "s3_bucket_name" {
   default     = null
 }
 
+variable "s3_force_destroy_bucket" {
+  description = "Name of the S3 bucket for state storage"
+  type        = bool
+  default     = false
+}
+
 variable "lambda_timeout" {
   description = "Lambda function timeout in seconds"
   type        = number
