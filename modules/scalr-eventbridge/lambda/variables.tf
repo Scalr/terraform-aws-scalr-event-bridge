@@ -30,6 +30,12 @@ variable "lambda_memory" {
   default     = 256
 }
 
+variable "lambda_reserved_concurrency" {
+  description = "Lambda function reserved concurrency limit"
+  type        = number
+  default     = 10
+}
+
 variable "log_retention" {
   description = "CloudWatch log retention in days"
   type        = number

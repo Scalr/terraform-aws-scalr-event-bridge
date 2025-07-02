@@ -2,6 +2,10 @@ provider "aws" {
   region = var.region
 }
 
+provider "scalr" {
+  hostname = "${var.scalr_account_name}.scalr.io"
+}
+
 module "scalr_event_bridge" {
   source = "./modules/scalr-eventbridge"
 

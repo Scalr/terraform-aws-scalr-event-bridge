@@ -11,15 +11,28 @@ logger.setLevel(logging.INFO)
 
 # Initialize AWS clients
 s3_client = boto3.client('s3')
+secrets_client = boto3.client('secretsmanager')
 http = urllib3.PoolManager()
 
 scalr_host = os.environ['SCALR_HOSTNAME']
 api_url = f"https://{scalr_host}/api/iacp/v3"
 
+def get_scalr_token():
+    """Get the Scalr API token from AWS Secrets Manager."""
+    try:
+        secret_arn = os.environ['SCALR_SECRET_ARN']
+        response = secrets_client.get_secret_value(SecretId=secret_arn)
+        secret = json.loads(response['SecretString'])
+        return secret['token']
+    except Exception as e:
+        logger.error(f"Error retrieving Scalr token from Secrets Manager: {str(e)}")
+        raise
+
 def get_scalr_headers():
     """Get headers for Scalr API requests."""
+    token = get_scalr_token()
     return {
-        'Authorization': f'Bearer {os.environ["SCALR_TOKEN"]}',
+        'Authorization': f'Bearer {token}',
         'Content-Type': 'application/vnd.api+json'
     }
 

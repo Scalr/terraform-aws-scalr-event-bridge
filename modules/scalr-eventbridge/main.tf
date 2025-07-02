@@ -9,14 +9,15 @@ module "scalr" {
 module "lambda" {
   source = "./lambda"
 
-  s3_bucket_name        = module.s3.bucket_name
-  lambda_timeout        = var.lambda_timeout
-  lambda_memory         = var.lambda_memory
-  log_retention         = var.log_retention
-  kms_key_arn           = module.s3.kms_key_arn
-  event_bridge_rule_arn = module.eventbridge.rule_arn
-  scalr_token           = module.scalr.scalr_token
-  scalr_hostname        = module.scalr.scalr_hostname
+  s3_bucket_name               = module.s3.bucket_name
+  lambda_timeout               = var.lambda_timeout
+  lambda_memory                = var.lambda_memory
+  lambda_reserved_concurrency  = var.lambda_reserved_concurrency
+  log_retention                = var.log_retention
+  kms_key_arn                  = module.s3.kms_key_arn
+  event_bridge_rule_arn        = module.eventbridge.rule_arn
+  scalr_token                  = module.scalr.scalr_token
+  scalr_hostname               = module.scalr.scalr_hostname
 }
 
 module "eventbridge" {
@@ -44,7 +45,9 @@ module "eventbridge" {
 module "s3" {
   source = "./s3"
 
-  s3_bucket_name       = var.s3_bucket_name
-  state_retention_days = var.state_retention_days
-  force_destroy        = var.s3_force_destroy_bucket
+  s3_bucket_name                     = var.s3_bucket_name
+  state_retention_days               = var.state_retention_days
+  noncurrent_version_retention_days  = var.noncurrent_version_retention_days
+  access_log_retention_days          = var.access_log_retention_days
+  force_destroy                      = var.s3_force_destroy_bucket
 }
