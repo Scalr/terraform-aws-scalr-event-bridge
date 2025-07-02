@@ -45,3 +45,8 @@ variable "state_retention_days" {
   type        = number
   default     = 90
 }
+
+variable "scalr_account_name" {
+  type = string
+  default = "The Scalr account name"
+}
